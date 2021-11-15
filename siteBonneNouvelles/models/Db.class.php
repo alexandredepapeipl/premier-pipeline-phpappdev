@@ -44,7 +44,7 @@ class Db
         # Définition du query et préparation
         if ($keyword != '') {
             $keyword = str_replace("%", "\%", $keyword);
-            $query = "SELECT * FROM livres WHERE titre LIKE :keyword COLLATE utf8_bin ORDER BY no DESC ";
+            $query = "SELECT * FROM Livres WHERE titre LIKE :keyword COLLATE utf8_bin ORDER BY no DESC ";
             $ps = $this->_db->prepare($query);
             # Le bindValue se charge de quoter proprement les valeurs des variables sql
             $ps->bindValue(':keyword',"%$keyword%");
@@ -71,7 +71,7 @@ class Db
 
     public function insert_livre($titre,$auteur) {
         # Solution d'INSERT avec prepared statement
-        $query = 'INSERT INTO livres (titre, auteur) values (:titre,:auteur)';
+        $query = 'INSERT INTO Livres (titre, auteur) values (:titre,:auteur)';
         $ps = $this->_db->prepare($query);
         $ps->bindValue(':titre',$titre);
         $ps->bindValue(':auteur',$auteur);
