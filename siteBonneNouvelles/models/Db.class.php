@@ -7,7 +7,15 @@ class Db
     private function __construct()
     {
         try {
-            $this->_db = new PDO('postgres://lzfvqkebwpmqlx:1bfe97a08ad869eeef424da07be86ff88280ff680b9e441f3d4e1cb470403315@ec2-34-251-245-108.eu-west-1.compute.amazonaws.com:5432/d85scg3lhiiot7', 'lzfvqkebwpmqlx', '1bfe97a08ad869eeef424da07be86ff88280ff680b9e441f3d4e1cb470403315');
+	    $db = parse_url(getenv("DATABASE_URL"))
+            $this->_db = new PDO("pgsql", 
+				 sprintf("host=%s;port=%s;user=%s;password=%s;dbname=%s",
+				 $db["host"],
+				 $db["port"],
+				 $db["user"],
+				 $db["pass"],
+				 ltrim($db["path"], "/")
+				));
             $this->_db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         } 
 		catch (PDOException $e) {
